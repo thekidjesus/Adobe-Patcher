@@ -2,7 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Result;
@@ -10,41 +10,28 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-
 import javax.swing.JComboBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -76,7 +63,7 @@ class AdobePatcherClass extends JFrame {
 	JLabel nanoimg;
 
 	AdobePatcherClass() {
-		super("Adobe Patcher v1.0 Beta");
+		super("Adobe Patcher v1.0");
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		setSize(450, 220);
 		getContentPane().setLayout(null);
@@ -125,7 +112,12 @@ class AdobePatcherClass extends JFrame {
 		MouseListener iconGlow = new iconGlow();
 
 		btcimg = new JLabel();
+		
+		//test
+		//btcIcon = getResourceImage("src/icons/btcDark.png", 21, 21);
+		//real
 		btcIcon = getResourceImage("bin/images/newIcons/btcDark.png", 21, 21);
+		
 		btcimg.setIcon(btcIcon);
 		btcimg.setBounds(70, iconHeight - 2, 22, 22);
 		getContentPane().add(btcimg);
@@ -134,7 +126,12 @@ class AdobePatcherClass extends JFrame {
 		btcimg.setToolTipText("Bitcoin");
 
 		ltcimg = new JLabel();
+		
+		//test
+		//ltcIcon=getResourceImage("src/icons/ltcDark.png",20,20);
+		//real
 		ltcIcon = getResourceImage("bin/images/newIcons/ltcDark.png", 20, 20);
+		
 		ltcimg.setIcon(ltcIcon);
 		ltcimg.setBounds(100, iconHeight, 20, 20);
 		getContentPane().add(ltcimg);
@@ -143,7 +140,12 @@ class AdobePatcherClass extends JFrame {
 		ltcimg.setToolTipText("Litecoin");
 
 		nanoimg = new JLabel();
+		
+		//test
+		//nanoIcon = getResourceImage("src/icons/nanoDark.png", 20, 20);
+		//real
 		nanoIcon = getResourceImage("bin/images/newIcons/nanoDark.png", 20, 20);
+		
 		nanoimg.setIcon(nanoIcon);
 		nanoimg.setBounds(130, iconHeight, 20, 20);
 		getContentPane().add(nanoimg);
@@ -162,16 +164,28 @@ class AdobePatcherClass extends JFrame {
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			if (btcimg.equals(arg0.getSource())) {
+				
+				//test:
+				//ImageIcon darkbitcoinIcon=getResourceImage("src/icons/btcDarkGlow.png",21,21);
 				ImageIcon darkbitcoinIcon = getResourceImage("bin/images/newIcons/btcDarkGlow.png", 21, 21);
+				
 				btcimg.setIcon(darkbitcoinIcon);
 			}
 			if (ltcimg.equals(arg0.getSource())) {
+				
+				
 				ImageIcon darkLitecoinIcon = getResourceImage("bin/images/newIcons/ltcDarkGlow.png", 20, 20);
+				
+				
 				ltcimg.setIcon(darkLitecoinIcon);
 
 			}
 			if (nanoimg.equals(arg0.getSource())) {
+				
+				
 				ImageIcon darkNanoIcon = getResourceImage("bin/images/newIcons/nanoDarkGlow.png", 20, 20);
+				
+				
 				nanoimg.setIcon(darkNanoIcon);
 			}
 
@@ -195,21 +209,40 @@ class AdobePatcherClass extends JFrame {
 		public void mousePressed(MouseEvent arg0) {
 
 			copyAction copyListener = new copyAction();
+			UIManager UI = new UIManager();
+			UI.put("OptionPane.background", Color.DARK_GRAY);
+			UI.put("Panel.background", Color.DARK_GRAY);
+			
 
 			if (btcimg.equals(arg0.getSource())) {
 
 				BufferedImage btcqr;
 				try {
+					//test
+					//btcqr = ImageIO.read(new File("src/bitcoinqr.png"));
+					
+					//real
 					btcqr = ImageIO.read(new File("bin/images/bitcoinqr.png"));
+					
+					
 					JLabel btcqrCode = new JLabel(new ImageIcon(btcqr));
 					btcqrCode.setAlignmentX(Component.CENTER_ALIGNMENT);
 					JPanel address = new JPanel();
 					address.setLayout(new BoxLayout(address, BoxLayout.Y_AXIS));
-					address.add(new JLabel(btcAddress1));
-					address.add(new JLabel(btcAddress2));
+					JLabel address1=new JLabel(btcAddress1);
+					address1.setForeground(cyan);
+					JLabel address2=new JLabel(btcAddress2);
+					address2.setForeground(cyan);
+					
+					address.add(address1);
+					address.add(address2);
 					JPanel bottomRow = new JPanel();
 					bottomRow.setLayout(new FlowLayout());
 
+					btcopy.setForeground(Color.BLACK);
+					btcopy.setBackground(cyan);
+					btcopy.setBorderPainted(false);
+					
 					btcopy.addActionListener(copyListener);
 					bottomRow.add(btcopy);
 					bottomRow.add(address);
@@ -229,15 +262,28 @@ class AdobePatcherClass extends JFrame {
 			if (ltcimg.equals(arg0.getSource())) {
 				BufferedImage ltcqr;
 				try {
+					
+					
 					ltcqr = ImageIO.read(new File("bin/images/litecoinqr.png"));
+					
+					
 					JLabel ltcqrCode = new JLabel(new ImageIcon(ltcqr));
 					ltcqrCode.setAlignmentX(Component.CENTER_ALIGNMENT);
 					JPanel address = new JPanel();
 					address.setLayout(new BoxLayout(address, BoxLayout.Y_AXIS));
-					address.add(new JLabel(ltcAddress1));
-					address.add(new JLabel(ltcAddress2));
+					JLabel address1=new JLabel(ltcAddress1);
+					address1.setForeground(cyan);
+					JLabel address2=new JLabel(ltcAddress2);
+					address2.setForeground(cyan);
+					
+					address.add(address1);
+					address.add(address2);
 					JPanel bottomRow = new JPanel();
 
+					
+					ltcopy.setForeground(Color.BLACK);
+					ltcopy.setBackground(cyan);
+					ltcopy.setBorderPainted(false);
 					ltcopy.addActionListener(copyListener);
 
 					bottomRow.add(ltcopy);
@@ -257,16 +303,25 @@ class AdobePatcherClass extends JFrame {
 			if (nanoimg.equals(arg0.getSource())) {
 				BufferedImage nanoqr;
 				try {
+					//nanoqr = ImageIO.read(new File("src/nanoqr.png"));
+					
+					
 					nanoqr = ImageIO.read(new File("bin/images/nanoqr.png"));
+					
+					
 					JPanel messageObj = new JPanel();
 					messageObj.setLayout(new BoxLayout(messageObj, BoxLayout.Y_AXIS));
 					JLabel toadd = new JLabel(new ImageIcon(nanoqr));
 					toadd.setAlignmentX(Component.CENTER_ALIGNMENT);
 					messageObj.add(toadd);
 					JLabel nanoaddress = new JLabel(nanoAddress1);
+					nanoaddress.setForeground(cyan);
 					JLabel nanoaddress2 = new JLabel(nanoAddress2);
+					nanoaddress2.setForeground(cyan);
 
-
+					nancopy.setForeground(Color.BLACK);
+					nancopy.setBackground(cyan);
+					nancopy.setBorderPainted(false);
 					nancopy.addActionListener(copyListener);
 
 					JPanel bottomRow = new JPanel(new FlowLayout());
@@ -325,8 +380,10 @@ class AdobePatcherClass extends JFrame {
 				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clipboard.setContents(stringSelection, null);
 			}
-
-			JOptionPane.showMessageDialog(null, "Address copied to clipboard!");
+			JLabel copiedMessage=new JLabel("Address copied to clipboard!");
+			copiedMessage.setForeground(Color.WHITE);
+			
+			JOptionPane.showMessageDialog(null, copiedMessage);
 
 		}
 
@@ -352,30 +409,41 @@ class AdobePatcherClass extends JFrame {
 
 			String a = comboBox.getSelectedItem().toString();
 			String address;
+			String address2;
 			int nodeNumber;
 
 			switch (a) {
 			case ae:
 				System.out.println("After Effects");
 				address = "C:\\Program Files\\Adobe\\Adobe After Effects CC 2018\\Support Files\\AMT\\application.xml";
+				address2= "C:\\Program Files\\Adobe\\Adobe After Effects CC 2019\\Support Files\\AMT\\application.xml";
 				nodeNumber = 17;
 				break;
 			case pp:
 				System.out.println("Premiere Pro");
 				address = "C:\\Program Files\\Adobe\\Adobe Premiere Pro CC 2018\\AMT\\application.xml";
+				address2 = "C:\\Program Files\\Adobe\\Adobe Premiere Pro CC 2019\\AMT\\application.xml";
 				nodeNumber = 15;
 				break;
 			case ps:
 				System.out.println("photoshop");
 				address = "C:\\Program Files\\Adobe\\Adobe Photoshop CC 2018\\AMT\\application.xml";
+				address2= "C:\\Program Files\\Adobe\\Adobe Photoshop CC 2019\\AMT\\application.xml";
 				nodeNumber = 18;
 				break;
 			default:
 				address = "none";
+				address2="none";
 				nodeNumber = -1;
 			}
+			
 
 			int returnedValue = editText(nodeNumber, address);
+			
+			if (returnedValue==-2) 
+				returnedValue=editText(nodeNumber,address2);
+			
+			
 			// 1 : Success
 
 			// -1 : lineToEdit is negative for some reason. not expected to happen
@@ -394,30 +462,30 @@ class AdobePatcherClass extends JFrame {
 				System.exit(0);
 			case -1:
 				Toolkit.getDefaultToolkit().beep();
-				JOptionPane.showMessageDialog(null, "Patch failed. Unknown error.\nAdobe Patcher will now close",
+				JOptionPane.showMessageDialog(null, "Patch failed. \nAdobe Patcher will now close (Error 564).",
 						"Patch failed", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			case -2:
 				Toolkit.getDefaultToolkit().beep();
 				JOptionPane.showMessageDialog(null,
-						"Adobe folder was not found. Try reinstalling Adobe product.\nAdobe Patcher will now close.",
+						"Adobe folder was not found. Try reinstalling Adobe product.\nAdobe Patcher will now close (Error 565).",
 						"Patch failed", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			case -3:
 				Toolkit.getDefaultToolkit().beep();
-				JOptionPane.showMessageDialog(null, "Unexpected Error. Patcher will now close.", "Patch Failed",
+				JOptionPane.showMessageDialog(null, "Unexpected Error. Patcher will now close.", "Patch Failed (Error 566)",
 						JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			case -4:
 				Toolkit.getDefaultToolkit().beep();
 				JOptionPane.showMessageDialog(null,
-						"Error finalizing patch. Did you right click on\nAdobe Patcher and click 'Run as administrator'?\n Patcher will now close.",
+						"Error finalizing patch. Did you right click on\nAdobe Patcher and click 'Run as administrator'?\n Patcher will now close. (Error 567)",
 						"Patch failed", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			default:
 				Toolkit.getDefaultToolkit().beep();
 				JOptionPane.showMessageDialog(null,
-						"Something went horribly wrong. Doesn't look like\nthis program will work for this PC. Patcher will now close.",
+						"Something went horribly wrong. Doesn't look like\nthis program will work for this PC. Patcher will now close. (Error 600)",
 						"Patch failed", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			}
@@ -443,14 +511,19 @@ class AdobePatcherClass extends JFrame {
 		DocumentBuilder docBuilder;
 		Document doc;
 
+		
 		// new method
 		try {
 			docFactory = DocumentBuilderFactory.newInstance();
 			docBuilder = docFactory.newDocumentBuilder();
 			doc = docBuilder.parse(fileAddress);
 		} catch (Exception e) {
+
 			return -2;
 		}
+		
+	
+		
 
 		Random random = new Random();
 		int a;
