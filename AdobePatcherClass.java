@@ -41,6 +41,8 @@ class AdobePatcherClass extends JFrame {
 	private final String ae = "Adobe After Effects";
 	private final String ps = "Adobe Photoshop";
 	private final String pp = "Adobe Premiere Pro";
+	private final String il = "Adobe Illustrator";
+	private final String lr = "Lightroom Classic ";
 	private Color cyan = new Color(7, 217, 207); //#07d9cf
 	private JButton btcopy= new JButton("Copy");
 	private JButton ltcopy=new JButton("Copy");
@@ -63,7 +65,7 @@ class AdobePatcherClass extends JFrame {
 	JLabel nanoimg;
 
 	AdobePatcherClass() {
-		super("Adobe Patcher v1.0");
+		super("Adobe Patcher v1.1");
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		setSize(450, 220);
 		getContentPane().setLayout(null);
@@ -91,7 +93,7 @@ class AdobePatcherClass extends JFrame {
 		patchButton.setBorderPainted(false);
 
 		// buttons in comboBox
-		String[] adobeProducts = new String[] { "None", ae, pp, ps };
+		String[] adobeProducts = new String[] { "None", ae, pp, ps, il, lr };
 		comboBox = new JComboBox<>(adobeProducts);
 		comboBox.setBounds(253, 40, 150, 25);
 		getContentPane().add(comboBox);
@@ -430,6 +432,18 @@ class AdobePatcherClass extends JFrame {
 				address = "C:\\Program Files\\Adobe\\Adobe Photoshop CC 2018\\AMT\\application.xml";
 				address2= "C:\\Program Files\\Adobe\\Adobe Photoshop CC 2019\\AMT\\application.xml";
 				nodeNumber = 18;
+				break;
+			case il:
+				System.out.println("Illustrator");
+				address= "C:\\Program Files\\Adobe\\Adobe Illustrator CC 2018\\Support Files\\Contents\\Windows\\AMT\\application.xml";
+				address2= "C:\\Program Files\\Adobe\\Adobe Illustrator CC 2019\\Support Files\\Contents\\Windows\\AMT\\application.xml";
+				nodeNumber=16;
+				break;
+			case lr:
+				System.out.println("Lightroom Classic");
+				address = "C:\\Program Files\\Adobe\\Adobe Lightroom Classic CC\\AMT\\application.xml";
+				address2= "C:\\Program Files\\Adobe\\Adobe Lightroom Classic CC\\AMT\\application.xml";
+				nodeNumber = 16;
 				break;
 			default:
 				address = "none";
